@@ -1,5 +1,6 @@
-﻿import sys
-import pprint
+﻿# -*- coding: utf-8 -*-
+
+import sys
 from pygments import highlight
 from pygments.lexers import PythonLexer
 from pygments.formatters import *
