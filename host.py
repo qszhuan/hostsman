@@ -103,7 +103,7 @@ def print_highlight(*a_list):
         print(highlight_line(each))
 
 
-if __name__ == '__main__':
+def main():
     host = Host()
     parser = init_parser(host.location())
     args = parser.parse_args()
@@ -133,3 +133,5 @@ if __name__ == '__main__':
                 print_highlight('## Not found ' + each)
     else:
         parser.print_help()
+if __name__ == '__main__':
+    main()
