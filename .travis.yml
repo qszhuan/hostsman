@@ -10,6 +10,7 @@ python:
   - "pypy"
 # command to install dependencies
 install:
-  - pip install --user -r requirements.txt
+  - pip install .
+  - pip install Pygments
 # command to run tests
 script: nosetests
