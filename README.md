@@ -6,9 +6,16 @@
 
 add, remove or list mappings in hosts file
 
+### Installation
+
+You can use pip to install this tool.
+
+Run `pip install hoste`
+
+
 ### Usage
 
-#### Help
+#### $ running `hoste` without any arguments will print out the help doc.
 ```
 
 usage: hoste [-h] [-l | -c HOSTNAME [HOSTNAME ...] | -i HOSTNAME[:IP]
