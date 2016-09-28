@@ -1,22 +1,25 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from unittest.mock import patch
-
-from host import Host
 import sys
-
+from hoste import Host
 import os
+
+version_info = sys.version_info
+if version_info.major >= 3 and version_info.minor >= 3:
+    from unittest.mock import patch
+else:
+    from mock import patch
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 host_path = os.path.join(dir_path, 'data', 'hosts')
 
-class TestHost(unittest.TestCase):
 
+class TestHost(unittest.TestCase):
     @patch("sys.platform", "linux")
     def test_get_correct_host_file_for_linux(self):
         host = Host()
         self.assertEquals('/etc/hosts', host.hostFile)
-
 
     @patch("sys.platform", "win32")
     def test_get_correct_host_file_for_windows(self):
@@ -70,6 +73,7 @@ class TestHost(unittest.TestCase):
         self.assertEquals(2, len(result))
         self.assertEquals('127.0.0.1   my.test1', result[0])
         self.assertEquals('127.0.0.2   my.test2', result[1])
+
 
 if __name__ == '__main__':
     unittest.main()

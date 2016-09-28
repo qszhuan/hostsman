@@ -13,7 +13,7 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(path.join(here, 'README'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
@@ -22,7 +22,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.0.0.dev1',
+    version='1.0.0',
 
     description='A tool to manage hosts file',
     long_description=long_description,
@@ -46,8 +46,13 @@ setup(
         'Development Status :: 3 - Alpha',
 
         # Indicate who your project is intended for
+        'Environment :: Console',
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Management Tools',
+        'Intended Audience :: System Administrators',
+        'Topic :: Utilities',
+        'Topic :: Software Development',
+        'Topic :: Terminals',
+        'Topic :: Text Processing',
 
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: MIT License',
@@ -107,7 +112,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'hoste=host:main',
+            'hoste=hoste:main',
         ],
     },
 )

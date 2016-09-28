@@ -1,9 +1,13 @@
-# hoste
+### hoste
+
 add, remove or list mappings in hosts file
 
+### Usage
+
+#### Help
 ```
 
-usage: host.py [-h] [-l | -c HOSTNAME [HOSTNAME ...] | -i HOSTNAME[:IP]
+usage: hoste [-h] [-l | -c HOSTNAME [HOSTNAME ...] | -i HOSTNAME[:IP]
                [HOSTNAME[:IP] ...] | -r HOSTNAME [HOSTNAME ...]]
 
 add, remove or list mappings in hosts file
@@ -18,3 +22,28 @@ optional arguments:
   -r HOSTNAME [HOSTNAME ...], --remove HOSTNAME [HOSTNAME ...]
                         Remove mapping for HOSTNAME from hosts file.
 ```
+
+#### list content of host file
+
+hoste -l
+
+
+#### check if hostname is configured in hosts file
+
+hoste -c hostname
+
+
+#### insert new mapping
+
+hoste -c my.local:192.1.1.3 my.local3
+
+#### remove mapping
+
+hoste -r my.local
+
+A backup file will be created for every removal operation(when the hostname is existed)
+
+
+
+
+
