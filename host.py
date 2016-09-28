@@ -4,12 +4,9 @@ import sys
 from pygments import highlight
 from pygments.lexers import PythonLexer
 from pygments.formatters import *
-from pygments.styles import get_all_styles
 import argparse
 from shutil import copyfile
 import datetime
-
-styles = list(get_all_styles())
 
 
 class Host:
@@ -25,7 +22,7 @@ class Host:
 
     def list(self):
         with open(self.hostFile, 'r') as f:
-            return list(f)
+            return [line.strip() for line in f]
 
     def add(self, hostname, ip='127.0.0.1'):
         if self.exists(hostname):
@@ -66,15 +63,15 @@ class Host:
                 return False
 
     def check(self, *host_names):
+        result = []
         with open(self.hostFile, 'r') as f:
             for line in list(f):
                 if line.startswith('#') or line == '\n':
                     continue
                 if line.split()[1] in host_names:
-                    yield line
+                    result.append(line.strip())
 
-            else:
-                yield None
+            return result
 
     def location(self):
         return self.hostFile
@@ -113,7 +110,7 @@ def main():
         print_highlight(*content)
     elif args.check:
         print_highlight('# checked result:')
-        result = list(host.check(*args.check))
+        result = host.check(*args.check)
         print_highlight(*result)
     elif args.insert:
         print_highlight('# Insert mapping:')
