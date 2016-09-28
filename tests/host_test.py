@@ -6,6 +6,9 @@ from unittest.mock import patch
 from host import Host
 import sys
 
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+host_path = os.path.join(dir_path, 'data', 'hosts')
 
 class TestHost(unittest.TestCase):
 
@@ -28,7 +31,7 @@ class TestHost(unittest.TestCase):
 
     def test_get_list(self):
         host = Host()
-        host.hostFile = './data/hosts'
+        host.hostFile = host_path
         host_list = host.list()
         self.assertEquals(len(host_list), 2)
         self.assertEquals("127.0.0.1   my.test1", host_list[0])
@@ -36,33 +39,33 @@ class TestHost(unittest.TestCase):
 
     def test_if_host_existed(self):
         host = Host()
-        host.hostFile = './data/hosts'
+        host.hostFile = host_path
         existed = host.exists('my.test1')
         self.assertTrue(existed)
 
     def test_host_not_existed(self):
         host = Host()
-        host.hostFile = './data/hosts'
+        host.hostFile = host_path
         existed = host.exists('piupiu')
         self.assertFalse(existed)
 
     def test_check_host(self):
         host = Host()
-        host.hostFile = './data/hosts'
+        host.hostFile = host_path
         result = host.check('my.test1')
         self.assertEquals(1, len(result))
         self.assertEquals('127.0.0.1   my.test1', result[0])
 
     def test_check_non_host(self):
         host = Host()
-        host.hostFile = './data/hosts'
+        host.hostFile = host_path
         result = host.check('aeiou')
         self.assertEquals(0, len(result))
         # self.assertIsNone(result)
 
     def test_check_multi_hosts(self):
         host = Host()
-        host.hostFile = './data/hosts'
+        host.hostFile = host_path
         result = host.check('my.test1', 'my.test2')
         self.assertEquals(2, len(result))
         self.assertEquals('127.0.0.1   my.test1', result[0])
