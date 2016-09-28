@@ -41,12 +41,30 @@ hoste -l
 
 #### $ check if hostname is configured in hosts file
 
+* check one hostname
+
 hoste -c hostname
+
+* check multiple hostnames
+
+host -c hostname1 hostname2
+
+it will print out the mappings for given hostnames
 
 
 #### $ insert new mapping
 
-hoste -c my.local:192.1.1.3 my.local3
+* Add single mapping
+
+hoste -i my.local:192.1.1.3 # will insert 192.1.1.3     my.local
+
+* If the ip not given, it will use 127.0.0.1 by default:
+
+hoste -i my.local   # will insert 127.0.0.1     my.local
+
+* You can also add multiple mappings in one go.
+
+hoste -r my.local my.local2:192.1.1.3
 
 #### $ remove mapping
 
