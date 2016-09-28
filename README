@@ -1,4 +1,8 @@
+[![Build Status](https://travis-ci.org/qszhuan/hoste.svg?branch=master)](https://travis-ci.org/qszhuan/hoste)
+
 ### hoste
+=====
+
 
 add, remove or list mappings in hosts file
 
@@ -23,21 +27,21 @@ optional arguments:
                         Remove mapping for HOSTNAME from hosts file.
 ```
 
-#### list content of host file
+#### $ list content of host file
 
 hoste -l
 
 
-#### check if hostname is configured in hosts file
+#### $ check if hostname is configured in hosts file
 
 hoste -c hostname
 
 
-#### insert new mapping
+#### $ insert new mapping
 
 hoste -c my.local:192.1.1.3 my.local3
 
-#### remove mapping
+#### $ remove mapping
 
 hoste -r my.local
 
