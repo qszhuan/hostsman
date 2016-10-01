@@ -97,7 +97,7 @@ def highlight_line(content):
 
 def print_highlight(*a_list):
     for each in a_list:
-        print(highlight_line(each)),
+        print(highlight_line(each))
 
 
 def main():
@@ -130,5 +130,6 @@ def main():
                 print_highlight('## Not found ' + each)
     else:
         parser.print_help()
+
 if __name__ == '__main__':
     main()
