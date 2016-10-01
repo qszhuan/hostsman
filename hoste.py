@@ -2,7 +2,7 @@
 
 import sys
 from pygments import highlight
-from pygments.lexers import PythonLexer
+from pygments.lexers import *
 from pygments.formatters import *
 import argparse
 from shutil import copyfile
@@ -92,12 +92,12 @@ def init_parser(file_path):
 
 
 def highlight_line(content):
-    return highlight(content, PythonLexer(), TerminalTrueColorFormatter())
+    return highlight(content, PythonLexer(ensurenl=False), TerminalTrueColorFormatter())
 
 
 def print_highlight(*a_list):
     for each in a_list:
-        print(highlight_line(each))
+        print(highlight_line(each)),
 
 
 def main():
@@ -109,7 +109,7 @@ def main():
         content = host.list()
         print_highlight(*content)
     elif args.check:
-        print_highlight('# checked result:')
+        print_highlight('# Search result:')
         result = host.check(*args.check)
         print_highlight(*result)
     elif args.insert:

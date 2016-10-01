@@ -1,25 +1,27 @@
 [![Build Status](https://travis-ci.org/qszhuan/hoste.svg?branch=master)](https://travis-ci.org/qszhuan/hoste)
 
-### hoste
+hoste
 =====
-
 
 add, remove or list mappings in hosts file
 
-### Installation
+## INSTALLATION
 
 You can use pip to install this tool.
 
-Run `pip install hoste`
+Run `pip install hoste`.
 
 
-### Usage
+## Usage
 
-#### $ running `hoste` without any arguments will print out the help doc.
+### $ Help
+
+Run `hoste` or `hoste -h` to check the help doc:
+
 ```
-
+(pypi) ➜  hoste git:(master) ✗ hoste
 usage: hoste [-h] [-l | -c HOSTNAME [HOSTNAME ...] | -i HOSTNAME[:IP]
-               [HOSTNAME[:IP] ...] | -r HOSTNAME [HOSTNAME ...]]
+             [HOSTNAME[:IP] ...] | -r HOSTNAME [HOSTNAME ...]]
 
 add, remove or list mappings in hosts file
 
@@ -32,46 +34,75 @@ optional arguments:
                         Insert HOSTNAME[:IP] mappings
   -r HOSTNAME [HOSTNAME ...], --remove HOSTNAME [HOSTNAME ...]
                         Remove mapping for HOSTNAME from hosts file.
+
+hosts file location: /etc/hosts
+```
+The last line of help gives the hosts file location on your pc.
+
+### $ List mappings in hosts file
+
+Run **`hoste -l`** to list out the content of hosts file.
+
+``` 
+127.0.0.1      	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+fe80::1%lo0    	localhost
+127.0.0.1      	my.local
 ```
 
-#### $ list content of host file
+### $ Check HOSTNAME
 
-hoste -l
+#### check if a hostname is configured in hosts file.
 
+Run `hoste -c hostname`,
 
-#### $ check if hostname is configured in hosts file
+It will return the result if `hostname` is in hosts file:
 
-* check one hostname
+```
+# Search result:
+127.0.0.1      	localhost
+::1             localhost
+fe80::1%lo0    	localhost
+```
 
-hoste -c hostname
+#### check multiple hostnames
 
-* check multiple hostnames
-
-host -c hostname1 hostname2
+Run `host -c my.local my.local2`
 
 it will print out the mappings for given hostnames
 
+```
+# Search result:
+127.0.0.1      	my.local
+127.0.0.1      	my.local2
+```
 
-#### $ insert new mapping
+### Insert mappings
 
-* Add single mapping
+#### Add single mapping
 
-hoste -i my.local:192.1.1.3 # will insert 192.1.1.3     my.local
+Run `hoste -i my.local3:192.1.1.3`, it will insert new mapping:
 
-* If the ip not given, it will use 127.0.0.1 by default:
+`192.1.1.3		my.local3`
 
-hoste -i my.local   # will insert 127.0.0.1     my.local
+If not given ip, the default value `127.0.0.1` will be used:
 
-* You can also add multiple mappings in one go.
+Run `hoste -i my.local4`, it will insert mapping: 
 
-hoste -r my.local my.local2:192.1.1.3
+`127.0.0.1 		my.local4`
 
-#### $ remove mapping
 
-hoste -r my.local
+#### Add multiple mappings.
 
-A backup file will be created for every removal operation(when the hostname is existed)
+`hoste -r my.local my.local2:192.1.1.3`
 
+### $ Remove mapping
+
+`hoste -r my.local`
+
+**A backup file will be created for every removal operation(when the hostname is existed)
+**
 
 
 
