@@ -101,8 +101,7 @@ Run `hoste -i my.local4`, it will insert mapping:
 
 `hoste -r my.local`
 
-**A backup file will be created for every removal operation(when the hostname is existed)
-**
+__ A backup file will be created for every removal operation(when the hostname is existed) __
 
 
 
