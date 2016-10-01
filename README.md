@@ -1,20 +1,23 @@
 [![Build Status](https://travis-ci.org/qszhuan/hoste.svg?branch=master)](https://travis-ci.org/qszhuan/hoste)
 
-hoste
+
+# hoste #
 =====
 
-add, remove or list mappings in hosts file
+Add, remove or list mappings in hosts file
 
 ## INSTALLATION
+
+Package Link: [hoste](https://pypi.python.org/pypi/hoste)
 
 You can use pip to install this tool.
 
 Run `pip install hoste`.
 
 
-## Usage
+## USAGE
 
-### $ Help
+### *$ Help*
 
 Run `hoste` or `hoste -h` to check the help doc:
 
@@ -23,7 +26,7 @@ Run `hoste` or `hoste -h` to check the help doc:
 usage: hoste [-h] [-l | -c HOSTNAME [HOSTNAME ...] | -i HOSTNAME[:IP]
              [HOSTNAME[:IP] ...] | -r HOSTNAME [HOSTNAME ...]]
 
-add, remove or list mappings in hosts file
+Add, remove or list mappings in hosts file
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -37,9 +40,10 @@ optional arguments:
 
 hosts file location: /etc/hosts
 ```
+
 The last line of help gives the hosts file location on your pc.
 
-### $ List mappings in hosts file
+### *$ List mappings in hosts file*
 
 Run **`hoste -l`** to list out the content of hosts file.
 
@@ -51,9 +55,9 @@ fe80::1%lo0    	localhost
 127.0.0.1      	my.local
 ```
 
-### $ Check HOSTNAME
+### *$ Check HOSTNAME*
 
-#### check if a hostname is configured in hosts file.
+#### Check if a hostname is configured in hosts file.
 
 Run `hoste -c hostname`,
 
@@ -66,11 +70,11 @@ It will return the result if `hostname` is in hosts file:
 fe80::1%lo0    	localhost
 ```
 
-#### check multiple hostnames
+#### Check multiple hostnames
 
-Run `host -c my.local my.local2`
+Run `host -c my.local my.local2`,
 
-it will print out the mappings for given hostnames
+It will print out the mappings for given hostnames
 
 ```
 # Search result:
@@ -78,7 +82,7 @@ it will print out the mappings for given hostnames
 127.0.0.1      	my.local2
 ```
 
-### Insert mappings
+### *$ Insert mappings*
 
 #### Add single mapping
 
@@ -95,13 +99,13 @@ Run `hoste -i my.local4`, it will insert mapping:
 
 #### Add multiple mappings.
 
-`hoste -r my.local my.local2:192.1.1.3`
+Run `hoste -r my.local my.local2:192.1.1.3`
 
-### $ Remove mapping
+### *$ Remove mapping*
 
-`hoste -r my.local`
+Run `hoste -r my.local` to remove `my.local`
 
-__ A backup file will be created for every removal operation(when the hostname is existed) __
+** A backup file will be created for every removal operation(when the hostname is existed) **
 
 
 
