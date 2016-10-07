@@ -2,7 +2,7 @@
 
 import unittest
 import sys
-from hoste import Host
+from hostsman import Host
 import os
 
 version_info = sys.version_info

@@ -26,7 +26,7 @@ except ImportError:
 long_description = readme_rst(f)
 
 setup(
-        name='hoste',
+        name='hostsman',
 
         # Versions should comply with PEP440.  For a discussion on single-sourcing
         # the version across setup.py and the project code, see
@@ -37,7 +37,7 @@ setup(
         long_description=long_description,
 
         # The project's main homepage.
-        url='https://github.com/qszhuan/hoste',
+        url='https://github.com/qszhuan/hostsman',
 
         # Author details
         author='Qingshan Zhuan',
@@ -86,7 +86,7 @@ setup(
 
         # Alternatively, if you want to distribute just a my_module.py, uncomment
         # this:
-          py_modules=["hoste"],
+          py_modules=["hosts"],
 
         # List run-time dependencies here.  These will be installed by pip when
         # your project is installed. For an analysis of "install_requires" vs pip's
@@ -121,7 +121,7 @@ setup(
         # pip to create the appropriate form of executable for the target platform.
         entry_points={
             'console_scripts': [
-                'hoste=hoste:main',
+                'hostsman=hostsman:main',
             ],
         },
 )

@@ -1,29 +1,32 @@
 [![Build Status](https://travis-ci.org/qszhuan/hoste.svg?branch=master)](https://travis-ci.org/qszhuan/hoste)
 
 
-# hoste #
+# hostsman  #
 =====
+
+We replaced the project name to `hostsman` from `hoste`
+
 
 Add, remove or list mappings in hosts file
 
 ## INSTALLATION
 
-Package Link: [hoste](https://pypi.python.org/pypi/hoste)
+Package Link: [hostsman](https://pypi.python.org/pypi/hostsman)
 
 You can use pip to install this tool.
 
-Run `pip install hoste`.
+Run `pip install hostsman`.
 
 
 ## USAGE
 
 ### *$ Help*
 
-Run `hoste` or `hoste -h` to check the help doc:
+Run `hostsman` or `hostsman -h` to check the help doc:
 
 ```
-(pypi) ➜  hoste git:(master) ✗ hoste
-usage: hoste [-h] [-l | -c HOSTNAME [HOSTNAME ...] | -i HOSTNAME[:IP]
+(pypi) ➜  hosts git:(master) ✗ hostsman
+usage: hostsman [-h] [-l | -c HOSTNAME [HOSTNAME ...] | -i HOSTNAME[:IP]
              [HOSTNAME[:IP] ...] | -r HOSTNAME [HOSTNAME ...]]
 
 Add, remove or list mappings in hosts file
@@ -45,7 +48,7 @@ The last line of help gives the hosts file location on your pc.
 
 ### *$ List mappings in hosts file*
 
-Run **`hoste -l`** to list out the content of hosts file.
+Run **`hostsman -l`** to list out the content of hosts file.
 
 ``` 
 127.0.0.1      	localhost
@@ -59,7 +62,7 @@ fe80::1%lo0    	localhost
 
 #### Check if a hostname is configured in hosts file.
 
-Run `hoste -c hostname`,
+Run `hostsman -c hostname`,
 
 It will return the result if `hostname` is in hosts file:
 
@@ -72,7 +75,7 @@ fe80::1%lo0    	localhost
 
 #### Check multiple hostnames
 
-Run `host -c my.local my.local2`,
+Run `hostsman -c my.local my.local2`,
 
 It will print out the mappings for given hostnames
 
@@ -86,26 +89,26 @@ It will print out the mappings for given hostnames
 
 #### Add single mapping
 
-Run `hoste -i my.local3:192.1.1.3`, it will insert new mapping:
+Run `hostsman -i my.local3:192.1.1.3`, it will insert new mapping:
 
 `192.1.1.3		my.local3`
 
 If not given ip, the default value `127.0.0.1` will be used:
 
-Run `hoste -i my.local4`, it will insert mapping: 
+Run `hostsman -i my.local4`, it will insert mapping: 
 
 `127.0.0.1 		my.local4`
 
 
 #### Add multiple mappings.
 
-Run `hoste -r my.local my.local2:192.1.1.3`
+Run `hostsman -r my.local my.local2:192.1.1.3`
 
 ### *$ Remove mapping*
 
-Run `hoste -r my.local` to remove `my.local`
+Run `hostsman -r my.local` to remove `my.local`
 
-** A backup file will be created for every removal operation(when the hostname is existed) **
+*A backup file will be created for every removal operation(when the hostname is existed) *
 
 
 
