@@ -1,5 +1,5 @@
 # Include the license file
-include LICENSE.txt
+include LICENSE
 include README.md
 
 # Include the data files
