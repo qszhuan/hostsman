@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/qszhuan/hoste.svg?branch=master)](https://travis-ci.org/qszhuan/hoste)
+[![Build Status](https://travis-ci.org/qszhuan/hostsman.svg?branch=master)](https://travis-ci.org/qszhuan/hostsman)
 
 
 # hostsman  #
