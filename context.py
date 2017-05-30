@@ -45,7 +45,7 @@ class Environment(object):
     is used by the test suite to simulate various scenarios.
 
     """
-    is_windows = is_windows
+    is_windows = Platform().is_windows()
     stdin = sys.stdin
     stdin_isatty = stdin.isatty()
     stdin_encoding = None

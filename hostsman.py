@@ -15,11 +15,10 @@ env = Environment()
 
 class Host:
     def __init__(self):
-        platform = sys.platform
-
-        if is_linux or is_mac:
+        platform = Platform()
+        if platform.is_linux() or platform.is_mac():
             self.hostFile = "/etc/hosts"
-        elif is_windows:
+        elif platform.is_windows():
             self.hostFile = 'c:\windows\system32\drivers\etc\hosts'
         else:
             self.hostFile = '/etc/hosts'

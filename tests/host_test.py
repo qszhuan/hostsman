@@ -16,18 +16,17 @@ host_path = os.path.join(dir_path, 'data', 'hosts')
 
 
 class TestHost(unittest.TestCase):
-    @patch("sys.platform", "linux")
+    @patch('sys.platform', 'linux')
     def test_get_correct_host_file_for_linux(self):
         host = Host()
         self.assertEquals('/etc/hosts', host.hostFile)
 
-    @patch("sys.platform", "win32")
+    @patch('sys.platform', 'win32')
     def test_get_correct_host_file_for_windows(self):
         host = Host()
-
         self.assertEquals('c:\windows\system32\drivers\etc\hosts', host.hostFile)
 
-    @patch("sys.platform", "darwin")
+    @patch('sys.platform', 'darwin')
     def test_get_correct_host_file_for_osx(self):
         host = Host()
         self.assertEquals('/etc/hosts', host.hostFile)
