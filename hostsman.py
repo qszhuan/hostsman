@@ -7,15 +7,18 @@ from pygments.formatters import *
 import argparse
 from shutil import copyfile
 import datetime
+from HostsLexer import *
+from utils import *
+from context import *
 
+env = Environment()
 
 class Host:
     def __init__(self):
-        platform = sys.platform
-
-        if 'linux' in platform or platform == 'darwin':
+        platform = Platform()
+        if platform.is_linux() or platform.is_mac():
             self.hostFile = "/etc/hosts"
-        elif platform == 'win32' or platform == 'cygwin':
+        elif platform.is_windows():
             self.hostFile = 'c:\windows\system32\drivers\etc\hosts'
         else:
             self.hostFile = '/etc/hosts'
@@ -92,13 +95,16 @@ def init_parser(file_path):
 
 
 def highlight_line(content):
-    return highlight(content, PythonLexer(ensurenl=False), TerminalTrueColorFormatter())
+    return highlight(content, HostsLexer(ensurenl=False), TerminalFormatter())
 
 
 def print_highlight(*a_list):
     for each in a_list:
-        print(highlight_line(each))
+        env.stdout.write(highlight_line(each) + '\n')
+    env.stdout.flush()
 
+from pygments.styles import STYLE_MAP
+print(STYLE_MAP.keys())
 
 def main():
     host = Host()
