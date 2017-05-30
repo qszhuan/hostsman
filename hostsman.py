@@ -28,12 +28,30 @@ class Host:
             return [line.strip() for line in f]
 
     def add(self, hostname, ip='127.0.0.1'):
-        if self.exists(hostname):
+        if self.exists(hostname, ip):
             return False
 
-        with open(self.hostFile, 'a') as f:
-            f.write(ip + '\t' + hostname + '\n')
-            return True
+        added = False
+        with open(self.hostFile, 'r+') as f:
+            for line in f:
+                if line.startswith('#') or line == '\n':
+                    f.write(line)
+                else:
+                    segment = line.split()
+                    if ip == segment[0]:
+                        segment.append(hostname)
+                        added = True
+                    f.write(segment[0])
+                    f.write('\t')
+                    f.write(' '.join(segment[1:]))
+                    f.write('\n')
+            if not added:
+                f.write(ip)
+                f.write('\t')
+                f.write(hostname)
+                f.write('\n')
+
+        return True
 
     def remove(self, hostname):
         if not self.exists(hostname):
@@ -46,21 +64,31 @@ class Host:
         with open(back_file, 'r') as input:
             with open(self.hostFile, 'w') as output:
                 for line in input:
+                    segment = line.split()
+
                     if line.startswith('#') or line == '\n':
                         output.write(line)
-                    elif len(line.split()) == 2 and line.split()[1] == hostname:  # only consider 1 hostname per line
+                    elif len(segment) == 2 and hostname == segment[1]:
                         found = True
                         continue
+                    elif len(segment) >= 2 and hostname in segment[1:]:
+                        found = True
+                        segment.remove(hostname)
+                        output.write(segment[0])
+                        output.write('\t')
+                        output.write(' '.join(segment[1:]))
+                        output.write('\n')
                     else:
                         output.write(line)
         return found, back_file
 
-    def exists(self, hostname):
+    def exists(self, hostname, ip = None):
         with open(self.hostFile, 'r') as f:
             for line in list(f):
+                segment = line.split()
                 if line.startswith('#') or line == '\n':
                     continue
-                if hostname in line.split()[1:]:
+                if hostname in segment[1:] and (ip is None or ip == segment[0]):
                     return True
             else:
                 return False

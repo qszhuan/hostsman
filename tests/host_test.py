@@ -47,7 +47,11 @@ class TestHost(unittest.TestCase):
         self.assertTrue(existed)
         self.assertTrue(host.exists("my.test2"))
         self.assertTrue(host.exists("my.test3"))
-       
+
+        self.assertTrue(host.exists("my.test1", "127.0.0.1"))
+        self.assertTrue(host.exists("my.test1", "127.0.0.2"))
+        self.assertFalse(host.exists("my.test1", "127.0.0.3"))
+
     def test_host_not_existed(self):
         host = Host()
         host.hostFile = host_path
