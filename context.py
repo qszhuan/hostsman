@@ -60,7 +60,7 @@ class Environment(object):
             try:
                 curses.setupterm()
                 colors = curses.tigetnum('colors')
-            except curses.error:
+            except:
                 pass
     else:
         # noinspection PyUnresolvedReferences
