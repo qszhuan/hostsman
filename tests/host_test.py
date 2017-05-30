@@ -35,16 +35,19 @@ class TestHost(unittest.TestCase):
         host = Host()
         host.hostFile = host_path
         host_list = host.list()
-        self.assertEquals(len(host_list), 2)
+        self.assertEquals(len(host_list), 3)
         self.assertEquals("127.0.0.1   my.test1", host_list[0])
-        self.assertEquals("127.0.0.2   my.test2", host_list[1])
+        self.assertEquals("127.0.0.2   my.test2 my.test3 my.test1", host_list[1])
+        self.assertEquals("127.0.0.3   my.test4", host_list[2])
 
     def test_if_host_existed(self):
         host = Host()
         host.hostFile = host_path
         existed = host.exists('my.test1')
         self.assertTrue(existed)
-
+        self.assertTrue(host.exists("my.test2"))
+        self.assertTrue(host.exists("my.test3"))
+       
     def test_host_not_existed(self):
         host = Host()
         host.hostFile = host_path
@@ -55,8 +58,9 @@ class TestHost(unittest.TestCase):
         host = Host()
         host.hostFile = host_path
         result = host.check('my.test1')
-        self.assertEquals(1, len(result))
+        self.assertEquals(2, len(result))
         self.assertEquals('127.0.0.1   my.test1', result[0])
+        self.assertEquals('127.0.0.2   my.test2 my.test3 my.test1', result[1])
 
     def test_check_non_host(self):
         host = Host()
@@ -71,7 +75,8 @@ class TestHost(unittest.TestCase):
         result = host.check('my.test1', 'my.test2')
         self.assertEquals(2, len(result))
         self.assertEquals('127.0.0.1   my.test1', result[0])
-        self.assertEquals('127.0.0.2   my.test2', result[1])
+        self.assertEquals('127.0.0.2   my.test2 my.test3 my.test1', result[1])
+    
 
 
 if __name__ == '__main__':

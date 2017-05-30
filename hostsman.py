@@ -60,7 +60,7 @@ class Host:
             for line in list(f):
                 if line.startswith('#') or line == '\n':
                     continue
-                if line.split()[1] == hostname:
+                if hostname in line.split()[1:]:
                     return True
             else:
                 return False
@@ -71,7 +71,7 @@ class Host:
             for line in list(f):
                 if line.startswith('#') or line == '\n':
                     continue
-                if line.split()[1] in host_names:
+                if len([x for x in line.split()[1:] if x in host_names]):
                     result.append(line.strip())
 
             return result
@@ -102,9 +102,6 @@ def print_highlight(*a_list):
     for each in a_list:
         env.stdout.write(highlight_line(each) + '\n')
     env.stdout.flush()
-
-from pygments.styles import STYLE_MAP
-print(STYLE_MAP.keys())
 
 def main():
     host = Host()
