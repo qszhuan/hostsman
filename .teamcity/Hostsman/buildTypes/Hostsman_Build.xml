@@ -4,7 +4,15 @@
   <description />
   <settings>
     <parameters />
-    <build-runners />
+    <build-runners>
+      <runner id="RUNNER_1" name="Install packages" type="simpleRunner">
+        <parameters>
+          <param name="script.content" value="pip install -r ./requirements.txt" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="Hostsman_HttpsGithubComQszhuanHostsmanGitRefsHeadsMaster" />
     </vcs-settings>
