@@ -32,24 +32,29 @@ class Host:
             return False
 
         added = False
-        with open(self.hostFile, 'r+') as f:
-            for line in f:
-                if line.startswith('#') or line == '\n':
-                    f.write(line)
-                else:
-                    segment = line.split()
-                    if ip == segment[0]:
-                        segment.append(hostname)
-                        added = True
-                    f.write(segment[0])
-                    f.write('\t')
-                    f.write(' '.join(segment[1:]))
-                    f.write('\n')
-            if not added:
-                f.write(ip)
-                f.write('\t')
-                f.write(hostname)
-                f.write('\n')
+        now = datetime.datetime.utcnow()
+        back_file = self.hostFile + now.strftime("-%Y.%m.%d.%H.%M.%S.%f")
+        copyfile(self.hostFile, back_file)
+
+        with open(back_file, 'r') as input:
+            with open(self.hostFile, 'w') as output:
+                for line in input:
+                    if line.startswith('#') or line == '\n':
+                        output.write(line)
+                    else:
+                        segment = line.split()
+                        if ip == segment[0]:
+                            segment.append(hostname)
+                            added = True
+                        output.write(segment[0])
+                        output.write('\t')
+                        output.write(' '.join(segment[1:]))
+                        output.write('\n')
+                if not added:
+                    output.write(ip)
+                    output.write('\t')
+                    output.write(hostname)
+                    output.write('\n')
 
         return True
 
