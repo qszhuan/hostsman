@@ -3,6 +3,7 @@
 from pygments.lexer import RegexLexer
 from pygments.token import *
 
+
 class HostsLexer(RegexLexer):
     name = 'Lexer for hosts file'
     aliases = ['hosts']
