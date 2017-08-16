@@ -23,6 +23,7 @@
 `hostsman` is a cross-platform command line tool for adding, removing or listing mappings in hosts file.
 It's written in python.
 
+![image](/hostsman.png)
 ## INSTALLATION
 
 You can use pip to install this tool.
