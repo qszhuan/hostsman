@@ -14,7 +14,7 @@ from context import *
 env = Environment()
 
 class Host:
-    def __init__(self):
+    def __init__(self, keepingHistory=True):
         platform = Platform()
         if platform.is_linux() or platform.is_mac():
             self.hostFile = "/etc/hosts"
@@ -22,6 +22,9 @@ class Host:
             self.hostFile = 'c:\windows\system32\drivers\etc\hosts'
         else:
             self.hostFile = '/etc/hosts'
+
+        self.keepingHistory = keepingHistory
+        
 
     def list(self):
         with open(self.hostFile, 'r') as f:
@@ -32,13 +35,13 @@ class Host:
             return False
 
         added = False
-        now = datetime.datetime.utcnow()
-        back_file = self.hostFile + now.strftime("-%Y.%m.%d.%H.%M.%S.%f")
-        copyfile(self.hostFile, back_file)
+        
+        self.keepHistory()
 
-        with open(back_file, 'r') as input:
+        with open(self.hostFile, 'r') as input:
+            lines = input.readlines()
             with open(self.hostFile, 'w') as output:
-                for line in input:
+                for line in lines:
                     if line.startswith('#') or line == '\n':
                         output.write(line)
                     else:
@@ -62,13 +65,12 @@ class Host:
         if not self.exists(hostname):
             return False,
 
-        now = datetime.datetime.utcnow()
-        back_file = self.hostFile + now.strftime("-%Y.%m.%d.%H.%M.%S.%f")
-        copyfile(self.hostFile, back_file)
+        backup_file = self.keepHistory()
         found = False
-        with open(back_file, 'r') as input:
+        with open(self.hostFile, 'r') as input:
+            lines = input.readlines()
             with open(self.hostFile, 'w') as output:
-                for line in input:
+                for line in lines:
                     segment = line.split()
 
                     if line.startswith('#') or line == '\n':
@@ -85,7 +87,7 @@ class Host:
                         output.write('\n')
                     else:
                         output.write(line)
-        return found, back_file
+        return found, backup_file
 
     def exists(self, hostname, ip = None):
         with open(self.hostFile, 'r') as f:
@@ -111,6 +113,13 @@ class Host:
 
     def location(self):
         return self.hostFile
+
+    def keepHistory(self):
+        if self.keepingHistory:
+            now = datetime.datetime.utcnow()
+            backup_file = self.hostFile + now.strftime("-%Y.%m.%d.%H.%M.%S.%f")
+            copyfile(self.hostFile, backup_file)
+            return backup_file
 
 
 def init_parser(file_path):
