@@ -47,7 +47,7 @@ class Host:
         with open(self.hostFile, 'w') as output:
             for line in lines:
                 if line.startswith('#') or line == '\n':
-                    output.write(line)
+                    output.write(line.strip()+ '\n')
                 else:
                     segment = line.split()
                     if ip == segment[0] and not self._should_split_row(segment[1:]) and not added:
