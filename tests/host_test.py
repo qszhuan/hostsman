@@ -5,6 +5,7 @@ import sys
 from hostsman import Host
 import os
 import uuid
+import filecmp
 
 version_info = sys.version_info
 if version_info[0] >= 3 and version_info[1] >= 3: # python2.6 can not use version_info.major
@@ -31,7 +32,6 @@ class TestHost(unittest.TestCase):
 
     def tearDown(self):
         os.remove(self.hostfile)
-        pass
 
     @patch('sys.platform', 'linux')
     def test_get_correct_host_file_for_linux(self):
@@ -89,16 +89,16 @@ class TestHost(unittest.TestCase):
     def test_add_host(self):
         success = self.host.add("add.test.com", "127.0.0.4")
         self.assertTrue(success)
-        filelines = len(open(self.hostfile).readlines())
-        self.assertEquals(4, filelines)
+        self.assertEquals(4, len(self.host.list()))
+        
         result = self.host.check("add.test.com")
         self.assertEquals("127.0.0.4\tadd.test.com", result[0])
     
     def test_add_host_to_existing_ip(self):
         success = self.host.add("add.test.com")
         self.assertTrue(success)
-        filelines = len(open(self.hostfile).readlines())
-        self.assertEquals(3, filelines)
+        
+        self.assertEquals(3, len(self.host.list()))
         result = self.host.check("add.test.com")
         self.assertEquals("127.0.0.1\tmy.test1 add.test.com", result[0])
 
@@ -107,14 +107,77 @@ class TestHost(unittest.TestCase):
         success,_ = self.host.remove(hostname)
         self.assertFalse(success)
         self.assertFalse(self.host.exists(hostname))
+        self.assertEquals(3, len(self.host.list()))
     
     def test_remove_host(self):
         hostname = "my.test1"
         success,_ = self.host.remove(hostname)
         self.assertTrue(success)
         self.assertFalse(self.host.exists(hostname))
+        self.assertEquals(2, len(self.host.list()))
 
+    @patch('sys.platform', 'win32')
+    def test_should_split_to_separate_line_if_hostname_alias_more_than_9_in_windows(self):
+        host = Host()
+        host.hostFile = self.hostfile
+        hostname = "my.test1"
 
+        for i in range(1, 10):
+            success = self.host.add(hostname + "." + str(i), '127.10.10.10')
+            self.assertTrue(success)
+        self.assertEquals(4, len(host.list()))
+
+        success = self.host.add(hostname + ".10", '127.10.10.10')
+        self.assertTrue(success)
+        self.assertEquals(5, len(host.list()))
+
+        for i in range(1, 11):
+            self.assertTrue(self.host.exists(hostname + "." + str(i)))
+
+    @patch('sys.platform', 'linux')
+    def test_should_not_split_to_separate_line_if_hostname_alias_more_than_9_on_non_windows_platform(self):
+        host = Host()
+        host.hostFile = self.hostfile
+        hostname = "my.test1"
+
+        for i in range(1, 10):
+            success = self.host.add(hostname + "." + str(i), '127.10.10.10')
+            self.assertTrue(success)
+        self.assertEquals(4, len(host.list()))
+
+        success = self.host.add(hostname + ".10", '127.10.10.10')
+        self.assertTrue(success)
+        self.assertEquals(4, len(host.list()))
+
+        for i in range(1, 11):
+            self.assertTrue(self.host.exists(hostname + "." + str(i)))
+
+    def test_backup_file_when_adding(self):
+        host = Host()
+        host.hostFile = self.hostfile
+        
+        _, backupfile = host.add('test')
+        existed = os.path.exists(backupfile)
+
+        self.assertTrue(filecmp.cmp(host_path, backupfile))
+        os.remove(backupfile)
+        
+        self.assertTrue(existed)
+
+    def test_backup_file_when_removing(self):
+        host = Host()
+        host.hostFile = self.hostfile
+
+        _, backupfile = host.remove('my.test1')
+        existed = os.path.exists(backupfile)
+        self.assertTrue(filecmp.cmp(host_path, backupfile))
+        self.assertTrue(existed)
+        os.remove(backupfile)
+        
+
+    def _get_line_count(self, filename):
+        with open(filename) as f:
+            return len(f.readlines())
 
 if __name__ == '__main__':
     unittest.main()
