@@ -126,8 +126,8 @@ class Host:
 
     def _keep_history(self):
         if self.keepingHistory:
-            now = datetime.datetime.utcnow()
-            backup_file = self.hostFile + now.strftime("-%Y.%m.%d.%H.%M.%S.%f")
+            now = datetime.datetime.now()
+            backup_file = self.hostFile + now.strftime("-%Y.%m.%d_%H-%M-%S-%f")
             copyfile(self.hostFile, backup_file)
             return backup_file
         return None
@@ -172,8 +172,9 @@ def main():
         print_highlight('# Insert mapping:')
         for each in args.insert:
             arg = each.split(':')
-            if host.add(*arg):
-                print_highlight('> inserted ' + each)
+            result = host.add(*arg)
+            if result[0]:
+                print_highlight('> inserted ' + each + ', backup file: ' + result[1])
             else:
                 print_highlight('> failed to insert ' + each)
     elif args.remove:
