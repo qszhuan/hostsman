@@ -63,7 +63,7 @@ class Host:
 
     def remove(self, hostname):
         if not self.exists(hostname):
-            return False,
+            return False,None
 
         backup_file = self.keepHistory()
         found = False

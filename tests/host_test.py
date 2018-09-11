@@ -102,6 +102,18 @@ class TestHost(unittest.TestCase):
         result = self.host.check("add.test.com")
         self.assertEquals("127.0.0.1\tmy.test1 add.test.com", result[0])
 
+    def test_remove_non_existing_host(self):
+        hostname = "add.test.com"
+        success,_ = self.host.remove(hostname)
+        self.assertFalse(success)
+        self.assertFalse(self.host.exists(hostname))
+    
+    def test_remove_host(self):
+        hostname = "my.test1"
+        success,_ = self.host.remove(hostname)
+        self.assertTrue(success)
+        self.assertFalse(self.host.exists(hostname))
+
 
 
 if __name__ == '__main__':
