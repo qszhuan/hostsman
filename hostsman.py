@@ -21,7 +21,7 @@ class Host:
         if platform.is_linux() or platform.is_mac():
             self.hostFile = "/etc/hosts"
         elif platform.is_windows():
-            self.hostFile = 'c:\windows\system32\drivers\etc\hosts'
+            self.hostFile = r'c:\windows\system32\drivers\etc\hosts'
         else:
             self.hostFile = '/etc/hosts'
 
