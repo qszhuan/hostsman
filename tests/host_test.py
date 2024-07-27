@@ -41,7 +41,7 @@ class TestHost(unittest.TestCase):
     @patch('sys.platform', 'win32')
     def test_get_correct_host_file_for_windows(self):
         host = Host()
-        self.assertEquals('c:\windows\system32\drivers\etc\hosts', host.hostFile)
+        self.assertEquals(r'c:\windows\system32\drivers\etc\hosts', host.hostFile)
 
     @patch('sys.platform', 'darwin')
     def test_get_correct_host_file_for_osx(self):
