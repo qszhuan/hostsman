@@ -120,7 +120,9 @@ class Host:
                     result.append(line.strip())
 
             return result
-
+    def update(self, from_pattern, to_pattern):
+        pass
+        
     def location(self):
         return self.hostFile
 
@@ -144,6 +146,8 @@ def init_parser(file_path):
                        help="Insert HOSTNAME[:IP] mappings")
     group.add_argument("-r", "--remove", metavar='HOSTNAME', nargs='+',
                        help="Remove mapping for HOSTNAME from hosts file.")
+    arg = group.add_argument("-u", "--update", metavar='OLD NEW', 
+                       help="Update text in HOSTNAME or IP with pattern(plain string, or regex).")
     return parser
 
 
@@ -185,6 +189,9 @@ def main():
                 print_highlight('## removed ' + each + ', backup file: ' + result[1])
             else:
                 print_highlight('## Not found ' + each)
+    elif args.update:
+        print_highlight('# Update text in HOSTNAME or IP')
+        print_highlight('WIP')
     else:
         parser.print_help()
 
